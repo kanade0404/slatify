@@ -124,7 +124,9 @@ export class Slack {
         throw new Error(JSON.stringify(res.text));
       }
     } catch (err) {
-      core.error(err.message);
+      if (err instanceof Error) {
+        core.error(err.message);
+      }
       throw new Error('Failed to post message to Slack');
     }
   }

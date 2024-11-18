@@ -21,7 +21,7 @@ export async function getCommit(token: string): Promise<CommitContext> {
     ? process.env.GITHUB_HEAD_REF.replace(/refs\/heads\//, '')
     : context.sha;
   const client = getOctokit(token);
-  const {data: commit} = await client.repos.getCommit({
+  const {data: commit} = await client.rest.repos.getCommit({
     owner,
     repo,
     ref

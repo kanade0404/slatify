@@ -1,8 +1,8 @@
 {
-  "name": "container-toolkit-template",
-  "version": "0.0.0",
-  "description": "Container template action using actions/toolkit",
-  "main": "lib/main.js",
+  "name": "slatify",
+  "version": "1.0.0",
+  "description": "Send customizable Slack notifications for GitHub Actions workflow job status.",
+  "main": "dist/main.js",
   "scripts": {
     "build": "ncc build src/index.ts",
     "format": "biome check . --write",
@@ -11,15 +11,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/actions/container-toolkit-template.git"
+    "url": "git+https://github.com/kanade0404/slatify.git"
   },
   "keywords": ["actions", "container", "toolkit", "setup"],
   "author": "GitHub",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/actions/container-toolkit-template/issues"
+    "url": "https://github.com/kanade0404/slatify/issues"
   },
-  "homepage": "https://github.com/actions/container-toolkit-template#readme",
+  "homepage": "https://github.com/kanade0404/slatify#readme",
   "dependencies": {
     "@actions/core": "^1.11.1",
     "@actions/github": "^6.0.0",

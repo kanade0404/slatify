@@ -1,11 +1,29 @@
+import * as fs from 'node:fs';
+import * as path from 'node:path';
 import * as github from '@actions/github';
 import nock from 'nock';
-import * as fs from 'fs';
-import * as path from 'path';
-import {Block, Slack} from '../src/slack';
-import {commonContext, repoUrl} from './github.test';
+import { Block, Slack } from './slack';
+import {
+  mockNumber,
+  mockPayload,
+  mockRef,
+  mockRepo,
+  mockSHA,
+  mockWorkflowURL,
+  repoUrl
+} from './tests/shared';
 
 describe('Base Field Tests', () => {
+  beforeAll(() => {
+    jest.spyOn(github.context, 'repo', 'get').mockReturnValue(mockRepo);
+    github.context.sha = mockSHA;
+    github.context.ref = mockRef;
+    github.context.workflow = mockWorkflowURL;
+    github.context.payload = mockPayload;
+  });
+  afterAll(() => {
+    jest.restoreAllMocks();
+  });
   function generateExpectedBaseField(
     actionUrl: string,
     eventBlockText: string
@@ -13,11 +31,11 @@ describe('Base Field Tests', () => {
     return [
       {
         type: 'mrkdwn',
-        text: `*repository*\n<${repoUrl}|${commonContext.owner}/${commonContext.repo}>`
+        text: `*repository*\n<${repoUrl}|${mockRepo.owner}/${mockRepo.repo}>`
       },
       {
         type: 'mrkdwn',
-        text: `*ref*\n${commonContext.ref}`
+        text: `*ref*\n${mockRef}`
       },
       {
         type: 'mrkdwn',
@@ -25,14 +43,14 @@ describe('Base Field Tests', () => {
       },
       {
         type: 'mrkdwn',
-        text: `*workflow*\n<${actionUrl}|${commonContext.workflow}>`
+        text: `*workflow*\n<${actionUrl}|${mockWorkflowURL}>`
       }
     ];
   }
 
   test('With event link', () => {
     github.context.eventName = 'pull_request';
-    const eventUrl = `${repoUrl}/pull/${commonContext.number}`;
+    const eventUrl = `${repoUrl}/pull/${mockNumber}`;
     const actionUrl = `${eventUrl}/checks`;
     const expectedBaseField = generateExpectedBaseField(
       actionUrl,
@@ -43,7 +61,7 @@ describe('Base Field Tests', () => {
 
   test('Without event link', () => {
     github.context.eventName = 'push';
-    const actionUrl = `${repoUrl}/commit/${commonContext.sha}/checks`;
+    const actionUrl = `${repoUrl}/commit/${mockSHA}/checks`;
     const expectedBaseField = generateExpectedBaseField(
       actionUrl,
       github.context.eventName
@@ -121,26 +139,26 @@ describe('Payload Tests', () => {
 
   test('Generate slack payload', () => {
     github.context.eventName = 'pull_request';
-    const eventUrl = `${repoUrl}/pull/${commonContext.number}`;
+    const eventUrl = `${repoUrl}/pull/${mockNumber}`;
 
     const expectedPayload = {
       text: `<!${context.mention}> ${context.jobName} ${
-        Block.status[context.status]['result']
+        Block.status[context.status].result
       }`,
       attachments: [
         {
-          color: Block.status[context.status]['color'],
+          color: Block.status[context.status].color,
           blocks: [
             {
               type: 'section',
               fields: [
                 {
                   type: 'mrkdwn',
-                  text: `*repository*\n<${repoUrl}|${commonContext.owner}/${commonContext.repo}>`
+                  text: `*repository*\n<${repoUrl}|${mockRepo.owner}/${mockRepo.repo}>`
                 },
                 {
                   type: 'mrkdwn',
-                  text: `*ref*\n${commonContext.ref}`
+                  text: `*ref*\n${mockRef}`
                 },
                 {
                   type: 'mrkdwn',
@@ -148,7 +166,7 @@ describe('Payload Tests', () => {
                 },
                 {
                   type: 'mrkdwn',
-                  text: `*workflow*\n<${eventUrl}/checks|${commonContext.workflow}>`
+                  text: `*workflow*\n<${eventUrl}/checks|${mockWorkflowURL}>`
                 },
                 {
                   type: 'mrkdwn',
@@ -188,27 +206,29 @@ describe('Post Message Tests', () => {
     icon_emoji: 'pray'
   };
   const payload = JSON.parse(
-    fs.readFileSync(path.join(__dirname, 'payload.json'), {encoding: 'utf8'})
+    fs.readFileSync(path.join(__dirname, 'tests/payload.json'), {
+      encoding: 'utf8'
+    })
   );
 
   test('Post successfully', async () => {
-    nock(baseUrl)
-      .post('/success')
-      .reply(200, 'ok');
+    nock(baseUrl).post('/success').reply(200, 'ok');
 
     const res = await Slack.notify(`${baseUrl}/success`, options, payload);
     expect(res).toBe(undefined);
   });
 
   test('Throw error', async () => {
-    nock(baseUrl)
-      .post('/failure')
-      .reply(404, {error: 'channel_not_found'});
+    nock(baseUrl).post('/failure').reply(404, { error: 'channel_not_found' });
 
     try {
       await Slack.notify(`${baseUrl}/failure`, options, payload);
     } catch (err) {
-      expect(err.message).toBe('Failed to post message to Slack');
+      if (err instanceof Error) {
+        expect(err.message).toBe('Failed to post message to Slack');
+      } else {
+        fail('Should throw error');
+      }
     }
   });
 });

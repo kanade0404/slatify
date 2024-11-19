@@ -1,10 +1,10 @@
 import * as core from '@actions/core';
-import {context} from '@actions/github';
-import {MrkdwnElement} from '@slack/types';
+import { context } from '@actions/github';
+import type { MrkdwnElement } from '@slack/types';
 import {
   IncomingWebhook,
-  IncomingWebhookSendArguments,
-  IncomingWebhookDefaultArguments
+  type IncomingWebhookDefaultArguments,
+  type IncomingWebhookSendArguments
 } from '@slack/webhook';
 import * as github from './github';
 
@@ -25,7 +25,7 @@ export class Block {
   };
 
   public static getBaseField(): MrkdwnElement[] {
-    const {owner, repo} = context.repo;
+    const { owner, repo } = context.repo;
     const url = github.getWorkflowUrls();
     const eventText = url.event
       ? `<${url.event}|${context.eventName}>`
@@ -124,7 +124,9 @@ export class Slack {
         throw new Error(JSON.stringify(res.text));
       }
     } catch (err) {
-      core.error(err.message);
+      if (err instanceof Error) {
+        core.error(err.message);
+      }
       throw new Error('Failed to post message to Slack');
     }
   }

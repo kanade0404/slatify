@@ -8,13 +8,13 @@ on:
 jobs:
   release:
     name: Build production
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v4
         with:
-          node-version: '12.x'
+          node-version: '22.x'
 
       - name: Create Release
         uses: actions/create-release@v1.0.0

@@ -1,14 +1,14 @@
 import * as core from '@actions/core';
-import {IncomingWebhookDefaultArguments} from '@slack/webhook';
+import type { IncomingWebhookDefaultArguments } from '@slack/webhook';
 import * as github from './github';
-import {validateStatus, isValidCondition} from './utils';
-import {Slack} from './slack';
+import { Slack } from './slack';
+import { isValidCondition, validateStatus } from './utils';
 
 async function run() {
   const status = validateStatus(
-    core.getInput('type', {required: true}).toLowerCase()
+    core.getInput('type', { required: true }).toLowerCase()
   );
-  const jobName = core.getInput('job_name', {required: true});
+  const jobName = core.getInput('job_name', { required: true });
   const url = process.env.SLACK_WEBHOOK || core.getInput('url');
   let mention = core.getInput('mention');
   let mentionCondition = core.getInput('mention_if').toLowerCase();

@@ -1,44 +1,40 @@
 {
-  "name": "container-toolkit-template",
-  "version": "0.0.0",
-  "description": "Container template action using actions/toolkit",
-  "main": "lib/main.js",
+  "name": "slatify",
+  "version": "1.0.0",
+  "description": "Send customizable Slack notifications for GitHub Actions workflow job status.",
+  "main": "dist/main.js",
   "scripts": {
     "build": "ncc build src/index.ts",
-    "format": "prettier --write **/*.ts",
-    "format:check": "prettier --check --loglevel warn src/**",
+    "format": "biome check . --write",
+    "format:check": "biome check .",
     "test": "jest"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/actions/container-toolkit-template.git"
+    "url": "git+https://github.com/kanade0404/slatify.git"
   },
-  "keywords": [
-    "actions",
-    "container",
-    "toolkit",
-    "setup"
-  ],
+  "keywords": ["actions", "container", "toolkit", "setup"],
   "author": "GitHub",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/actions/container-toolkit-template/issues"
+    "url": "https://github.com/kanade0404/slatify/issues"
   },
-  "homepage": "https://github.com/actions/container-toolkit-template#readme",
+  "homepage": "https://github.com/kanade0404/slatify#readme",
   "dependencies": {
-    "@actions/core": "^1.2.1",
-    "@actions/github": "^4.0.0",
-    "@slack/webhook": "^5.0.1"
+    "@actions/core": "^1.11.1",
+    "@actions/github": "^6.0.0",
+    "@slack/webhook": "^7.0.3"
   },
   "devDependencies": {
-    "@types/jest": "^24.9.0",
+    "@biomejs/biome": "1.9.4",
+    "@types/jest": "^29.5.14",
     "@types/nock": "^11.1.0",
-    "@types/node": "^12.12.25",
-    "@vercel/ncc": "^0.24.1",
-    "jest": "^24.8.0",
-    "nock": "^13.0.11",
-    "prettier": "^1.17.1",
-    "ts-jest": "^24.3.0",
-    "typescript": "^3.7.5"
+    "@types/node": "^22.9.0",
+    "@vercel/ncc": "^0.38.3",
+    "jest": "^29.7.0",
+    "nock": "^13.5.6",
+    "prettier": "^3.3.3",
+    "ts-jest": "^29.2.5",
+    "typescript": "^5.6.3"
   }
 }

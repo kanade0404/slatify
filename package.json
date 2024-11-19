@@ -5,20 +5,15 @@
   "main": "lib/main.js",
   "scripts": {
     "build": "ncc build src/index.ts",
-    "format": "prettier --write **/*.ts",
-    "format:check": "prettier --check --loglevel warn src/**",
+    "format": "biome check . --write",
+    "format:check": "biome check .",
     "test": "jest"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/actions/container-toolkit-template.git"
   },
-  "keywords": [
-    "actions",
-    "container",
-    "toolkit",
-    "setup"
-  ],
+  "keywords": ["actions", "container", "toolkit", "setup"],
   "author": "GitHub",
   "license": "ISC",
   "bugs": {
@@ -31,6 +26,7 @@
     "@slack/webhook": "^7.0.3"
   },
   "devDependencies": {
+    "@biomejs/biome": "1.9.4",
     "@types/jest": "^29.5.14",
     "@types/nock": "^11.1.0",
     "@types/node": "^22.9.0",

@@ -1,4 +1,4 @@
-import {context, getOctokit} from '@actions/github';
+import { context, getOctokit } from '@actions/github';
 
 export interface WorkflowUrl {
   repo: string;
@@ -16,12 +16,12 @@ export interface CommitContext {
 }
 
 export async function getCommit(token: string): Promise<CommitContext> {
-  const {owner, repo} = context.repo;
+  const { owner, repo } = context.repo;
   const ref: string = process.env.GITHUB_HEAD_REF
     ? process.env.GITHUB_HEAD_REF.replace(/refs\/heads\//, '')
     : context.sha;
   const client = getOctokit(token);
-  const {data: commit} = await client.rest.repos.getCommit({
+  const { data: commit } = await client.rest.repos.getCommit({
     owner,
     repo,
     ref
@@ -47,7 +47,7 @@ function isPullRequest(): boolean {
 }
 
 export function getWorkflowUrls(): WorkflowUrl {
-  const {owner, repo} = context.repo;
+  const { owner, repo } = context.repo;
   const repoUrl: string = `https://github.com/${owner}/${repo}`;
   const result: WorkflowUrl = {
     repo: repoUrl,

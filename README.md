@@ -4,7 +4,7 @@
 ![Test](https://img.shields.io/github/workflow/status/kanade0404/slatify/Tests?label=test)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/kanade0404/slatify?color=brightgreen)
 ![GitHub](https://img.shields.io/github/license/kanade0404/slatify?color=brightgreen)
-[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
+[![code style: biome](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/biomejs/biome)
 
 This is Slack Notification Action.
 

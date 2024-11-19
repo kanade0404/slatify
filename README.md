@@ -1,19 +1,12 @@
 # Slatify
 
-![Build](https://img.shields.io/github/workflow/status/lazy-actions/slatify/Build?label=build)
-![Test](https://img.shields.io/github/workflow/status/lazy-actions/slatify/Tests?label=test)
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/lazy-actions/slatify?color=brightgreen)
-![GitHub](https://img.shields.io/github/license/lazy-actions/slatify?color=brightgreen)
+![Build](https://img.shields.io/github/workflow/status/kanade0404/slatify/Build?label=build)
+![Test](https://img.shields.io/github/workflow/status/kanade0404/slatify/Tests?label=test)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/kanade0404/slatify?color=brightgreen)
+![GitHub](https://img.shields.io/github/license/kanade0404/slatify?color=brightgreen)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
 This is Slack Notification Action.
-
-# Announcement
-
-:rotating_light: Transferred repository from homoluctus :rotating_light:
-
-We don't need to rename from homoluctus/slatify to lazy-actions/slatify in .github/workflow/*.yml.
-You can use as it is, but we recommend renaming it to lazy-actions/slatify.
 
 # ToC
 
@@ -66,7 +59,7 @@ Please refer to [action.yml](./action.yml) for more details.
 
 ```..github/workflows/example1.yml
 - name: Slack Notification
-  uses: lazy-actions/slatify@master
+  uses: kanade0404/slatify@master
   if: always()
   with:
     type: ${{ job.status }}
@@ -79,7 +72,7 @@ Please refer to [action.yml](./action.yml) for more details.
 
 ```..github/workflows/example2.yml
 - name: Slack Notification
-  uses: lazy-actions/slatify@master
+  uses: kanade0404/slatify@master
   if: always()
   with:
     type: ${{ job.status }}
@@ -101,5 +94,6 @@ Please refer to [action.yml](./action.yml) for more details.
 <img src="./images/slack.png" alt="Notification Preview" width="90%">
 
 ## LICENSE
+[The MIT License (MIT)](https://github.com/kanade0404/slatify/blob/master/LICENSE)
 
-[The MIT License (MIT)](https://github.com/lazy-actions/slatify/blob/master/LICENSE)
+Based on work by [lazy-actions/slatify](https://github.com/lazy-actions/slatify)
